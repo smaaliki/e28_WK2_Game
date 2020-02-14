@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang ='en'>
+<head>
+    <title>Practice Application</title>
+    <header>
+        <link rel="stylesheet" href="index.css">
+    </header>
+</head>
+<body>
+    <h1>Rock, Paper, Scissors!</h1>
+    <p>Select one of the 3 options below and click on [Let's Go] below:</p>
+    
+    <!--https://www.w3schools.com/tags/att_input_type_radio.asp-->
+    <p>
+        <input type='radio' id='selection' name='selection' value='Rock' checked='true'>
+        <label for='rock'>Rock</label><br>
+        <input type='radio' id='selection' name='selection' value='Paper'>
+        <label for='paper'>Paper</label><br>
+        <input type='radio' id='selection' name='selection' value='Scissors'>
+        <label for='scissors'>Scissors</label>
+    </p> 
+    
+    <!--https://www.w3schools.com/tags/tag_button.asp-->
+    <button>Let's Go!</button>
+
+    <p id='result'></p>
+    <p id='winner'></p>
+    <p id='scores'></p>
+    <script>
+        var myScore = 0;
+        var compScore = 0;
+        function clickHandler() {
+            // 1. Figuring out the selected option
+            //https://stackoverflow.com/questions/9561625/checking-value-of-radio-button-group-via-javascript
+            var options = document.getElementsByName('selection');
+            var mySelection;
+        
+            for(var i = 0; i < options.length; i++) {
+                if(options[i].checked){
+                    mySelection = options[i].value;
+                    break;
+                }
+            }
+                        
+            // 2. Random 'computer' selection
+            var rand =Math.random();
+            var compSelection = 'Rock';
+            if(rand<=0.33) compSelection = 'Rock';
+            else if(rand<=0.66) compSelection = 'Paper';
+            else compSelection = 'Scissors';
+
+            //console.log(rand);   
+            
+            // 3. Determining winner
+            if(mySelection==compSelection){
+                winnerTxt = 'It is a tie!!'
+            } else if(mySelection == 'Rock') {
+                if(compSelection == 'Paper'){
+                    winnerTxt = 'Computer Wins :(';
+                    compScore++;
+                }
+                else {
+                    winnerTxt = 'You Win :)';
+                    myScore++;
+                }
+            } else if(mySelection == 'Paper') {
+                if(compSelection == 'Scissors'){
+                    winnerTxt = 'Computer Wins :(';
+                    compScore++;
+                }
+                else {
+                    winnerTxt = 'You Win :)';
+                    myScore++;
+                }
+            } else if(mySelection == 'Scissors') {
+                if(compSelection == 'Rock') {
+                    winnerTxt = 'Computer Wins :(';
+                    compScore++;
+                }
+                else {
+                    winnerTxt = 'You Win :)';
+                    myScore++;
+                }
+            }
+
+            //4. Displaying Results
+            document.getElementById('result').textContent = 
+                'You selected: ' + mySelection + '; computer selected: ' + compSelection;
+            document.getElementById('winner').textContent = winnerTxt;
+            document.getElementById('scores').textContent = 
+                'My Score: ' + myScore + ' / Computer Score: ' + compScore;
+        }
+        const button = document.querySelector('button');
+        button.addEventListener('click', clickHandler);
+
+    </script>
+</body>
+</html>
